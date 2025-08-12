@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     password :str
     index_name  :str
     path : str
+    source_type : str = "s3"
 
     model_config = SettingsConfigDict(env_file=".env")
 

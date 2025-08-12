@@ -8,24 +8,25 @@ from data_loader import load_json
 
 def file_names():
     return [
-        '300000-draft.json',
-        '100000-draft.json',
-        '500000-draft.json',
-        '548000-draft.json',
-        '400000-draft.json',
-        '200000-draft.json',
-    ]
+    "https://trials-bucket-decentrialz.s3.ap-south-1.amazonaws.com/trials+data/100000-draft.json",
+    "https://trials-bucket-decentrialz.s3.ap-south-1.amazonaws.com/trials+data/200000-draft.json",
+    "https://trials-bucket-decentrialz.s3.ap-south-1.amazonaws.com/trials+data/300000-draft.json",
+    "https://trials-bucket-decentrialz.s3.ap-south-1.amazonaws.com/trials+data/400000-draft.json",
+    "https://trials-bucket-decentrialz.s3.ap-south-1.amazonaws.com/trials+data/500000-draft.json",
+    "https://trials-bucket-decentrialz.s3.ap-south-1.amazonaws.com/trials+data/547000-draft.json"
+]
+
 
 headers = {"Content-Type": "application/json"}
 
 async def data_indexing(trial, url):
     async with httpx.AsyncClient() as client:
-        response = await client.post(url, auth=auth, headers=headers, content=json.dumps(trial))
+        response = await client.post(url=url, auth=auth, headers=headers, content=json.dumps(trial))
         return response
 
 async def process_file(file_path, url, index_name):
     # Load JSON data from file
-    data = load_json(source=file_path,source_type="local")
+    data = load_json(source=file_path,source_type=settings.source_type)
     
     start = 0
     offset = 100
